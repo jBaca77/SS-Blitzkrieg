@@ -1,1 +1,189 @@
-<h1>Witaj na mojej nowej stronie!</h1>.
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORIEN Berlin - Kolekcja Świec Berlińskich</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        norien: {
+                            bg: '#f5f1ea', // Warm paper background
+                            text: '#2a2a2a', // Dark text
+                            accent: '#4a2c2a', // The dark burgundy/brown from the map
+                            muted: '#a89d8f', // Light brown
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Styl dla efektu mapy na tle sekcji produktów */
+        .map-bg {
+            background-image: 
+                radial-gradient(at 10% 20%, #4a2c2a 1px, transparent 1px),
+                radial-gradient(at 90% 80%, #4a2c2a 1px, transparent 1px);
+            background-size: 100px 100px;
+            opacity: 0.05; /* Bardzo subtelne */
+        }
+    </style>
+</head>
+<body class="bg-norien-bg text-norien-text font-sans antialiased">
+
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-norien-accent/10">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="text-lg font-light tracking-widest text-norien-accent">
+                NORIEN BERLIN
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#kolekcja" class="hover:text-norien-accent transition-colors">Kolekcja</a>
+                <a href="#o-nas" class="hover:text-norien-accent transition-colors">O nas</a>
+                <a href="#kontakt" class="hover:text-norien-accent transition-colors">Kontakt</a>
+                <a href="#" class="bg-norien-accent text-white px-6 py-2.5 rounded-full hover:bg-norien-accent/90 transition-colors">Koszyk</a>
+            </div>
+
+            <button class="md:hidden text-norien-accent p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-norien-bg border-t border-norien-accent/10">
+            <div class="px-6 py-4 space-y-4">
+                <a href="#kolekcja" class="block font-medium hover:text-norien-accent transition-colors">Kolekcja</a>
+                <a href="#o-nas" class="block font-medium hover:text-norien-accent transition-colors">O nas</a>
+                <a href="#kontakt" class="block font-medium hover:text-norien-accent transition-colors">Kontakt</a>
+                <a href="#" class="block bg-norien-accent text-white px-6 py-2.5 rounded-full text-center hover:bg-norien-accent/90 transition-colors">Koszyk</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-6 py-20 md:py-32 text-center relative">
+        <div class="absolute inset-0 map-bg -z-10"></div>
+        
+        <div class="max-w-3xl mx-auto space-y-6">
+            <h1 class="text-5xl md:text-6xl font-light tracking-tight text-norien-accent">Duch Berlina w Twoim Domu</h1>
+            <p class="text-xl md:text-2xl font-light text-norien-muted max-w-2xl mx-auto">Świece sojowe inspirowane unikalnym charakterem berlińskich dzielnic. Palo Santo, Bergamotka, Cedr – znajdź swój zapach.</p>
+            <div class="pt-6">
+                <a href="#kolekcja" class="bg-norien-accent text-white px-8 py-3.5 rounded-full text-lg font-medium hover:bg-norien-accent/90 transition-all inline-block">Odkryj kolekcję</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="kolekcja" class="bg-white py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-light tracking-tight text-norien-accent mb-16 text-center">Nasze Berlińskie Zapachy</h2>
+
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+                
+                <div class="bg-norien-bg p-8 md:p-12 rounded-[2rem] shadow-inner border border-norien-accent/10 flex flex-col md:flex-row gap-10 items-start">
+                    
+                    <div class="w-full md:w-1/2 flex-shrink-0 aspect-[3/4] rounded-xl relative overflow-hidden flex flex-col items-center justify-between p-10 shadow-lg" style="background-image: url('data:image/jpeg;base64,... (dodaj tutaj zakodowany obraz lub link do obrazu świecy)'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-[#402a24] opacity-90 -z-10"></div> <div class="text-white text-center space-y-2 flex-grow flex flex-col justify-center w-full">
+                            <span class="text-[0.65rem] tracking-[0.2em] font-light">NORIEN BERLIN</span>
+                            <span class="text-3xl font-light tracking-widest">NEUKÖLLN</span>
+                            <span class="border-t border-white opacity-50 block w-full my-3"></span>
+                            <p class="text-xs tracking-[0.1em] font-light leading-relaxed">PALO SANTO • BERGAMOT<br>CEDARWOOD</p>
+                        </div>
+                        <span class="text-white text-xs mt-auto">125 g</span>
+                    </div>
+
+                    <div class="w-full md:w-1/2 space-y-6 flex flex-col h-full">
+                        <div class="space-y-2">
+                            <h3 class="text-3xl font-light tracking-wide text-norien-accent">Neukölln</h3>
+                            <p class="text-lg font-medium">Palo Santo • Bergamot • Cedarwood</p>
+                        </div>
+                        <p class="text-sm text-norien-muted leading-relaxed flex-grow">
+                            "Neukölln żyje nieco później niż reszta. Bary pozostają otwarte, rozmowy dryfują na zewnątrz, a ulice po zmroku stają się inne. Nie jest wypolerowany, ale czuje się go naprawdę."
+                        </p>
+                        <div class="pt-4 flex items-center justify-between gap-4">
+                            <span class="text-3xl font-medium">129 zł</span>
+                            <button class="bg-norien-accent text-white px-6 py-2 rounded-full font-medium hover:bg-norien-accent/90 transition-colors">Dodaj do koszyka</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-norien-bg p-8 md:p-12 rounded-[2rem] shadow-inner border border-norien-accent/10 flex flex-col md:flex-row gap-10 items-start">
+                    
+                    <div class="w-full md:w-1/2 flex-shrink-0 aspect-[3/4] rounded-xl relative overflow-hidden flex flex-col items-center justify-between p-10 shadow-lg" style="background-image: url('data:image/jpeg;base64,...'); background-size: cover; background-position: center;">
+                        <div class="absolute inset-0 bg-[#4a2c2a] opacity-90 -z-10"></div> <div class="text-white text-center space-y-2 flex-grow flex flex-col justify-center w-full">
+                            <span class="text-[0.65rem] tracking-[0.2em] font-light">NORIEN BERLIN</span>
+                            <span class="text-3xl font-light tracking-widest">MITTE</span>
+                            <span class="border-t border-white opacity-50 block w-full my-3"></span>
+                            <p class="text-xs tracking-[0.1em] font-light leading-relaxed">PALO SANTO • BERGAMOT<br>CEDARWOOD</p>
+                        </div>
+                        <span class="text-white text-xs mt-auto">125 g</span>
+                    </div>
+
+                    <div class="w-full md:w-1/2 space-y-6 flex flex-col h-full">
+                        <div class="space-y-2">
+                            <h3 class="text-3xl font-light tracking-wide text-norien-accent">Mitte</h3>
+                            <p class="text-lg font-medium">Palo Santo • Bergamot • Cedarwood</p>
+                        </div>
+                        <p class="text-sm text-norien-muted leading-relaxed flex-grow">
+                            "Mitte to miejsce, gdzie wszystko się spotyka. Mijasz ministerstwa, galerie, turystów, a potem nagle znajdujesz cichą uliczkę lub ławkę w parku. Jest ruchliwe, czasem przytłaczające, ale trzyma miasto razem."
+                        </p>
+                        <div class="pt-4 flex items-center justify-between gap-4">
+                            <span class="text-3xl font-medium">129 zł</span>
+                            <button class="bg-norien-accent text-white px-6 py-2 rounded-full font-medium hover:bg-norien-accent/90 transition-colors">Dodaj do koszyka</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="o-nas" class="py-20 md:py-32 bg-norien-bg relative">
+        <div class="container mx-auto px-6 max-w-4xl grid md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-6">
+                <h2 class="text-4xl font-light tracking-tight text-norien-accent">Ręcznie Wylewane w Berlinie</h2>
+                <p class="text-lg text-norien-muted leading-relaxed">Każda świeca NORIEN jest wytwarzana z wosku sojowego i starannie dobranych olejków zapachowych. Pozwól woskowi stopić się do krawędzi podczas pierwszego palenia. Unikaj przeciągów. Trzymaj z dala od dzieci i zwierząt.</p>
+                <p class="text-sm text-norien-muted">Czas palenia: ok. 30 godzin.<br>Waga netto: 125 g.</p>
+            </div>
+            <div class="rounded-3xl border border-norien-accent/10 p-12 relative overflow-hidden h-[300px]">
+                <div class="absolute inset-0 map-bg -z-10 opacity-10"></div>
+                <div class="absolute inset-0 flex items-center justify-center p-8">
+                    <p class="text-[0.6rem] leading-relaxed text-norien-accent/60 font-mono tracking-wide text-center">
+                        // Scented candle made with soy wax and selected fragrance oils. Keep wick trimmed to approx. 5 mm before each use.<br><br>Made with soy wax and consciously sourced materials.<br>Hand poured in Berlin, Germany.<br><br>NORIEN<br>12555, Berlin, Germany<br>Website
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontakt" class="bg-norien-accent text-white py-16">
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12 text-sm">
+            <div class="space-y-4">
+                <div class="text-lg font-light tracking-widest">NORIEN BERLIN</div>
+                <p class="opacity-70">12555, Berlin, Niemcy</p>
+            </div>
+            <div class="space-y-3">
+                <p class="font-medium opacity-100">Obsługa</p>
+                <a href="#" class="block opacity-70 hover:opacity-100 transition-opacity">Regulamin</a>
+                <a href="#" class="block opacity-70 hover:opacity-100 transition-opacity">Polityka prywatności</a>
+                <a href="#" class="block opacity-70 hover:opacity-100 transition-opacity">Dostawa i zwroty</a>
+            </div>
+            <div class="space-y-3">
+                <p class="font-medium opacity-100">Skontaktuj się</p>
+                <a href="mailto:contact@norien.de" class="block opacity-70 hover:opacity-100 transition-opacity">contact@norien.de</a>
+                <p class="opacity-70">Instagram: @norien.berlin</p>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 mt-12 border-t border-white/10 pt-8 text-center text-xs opacity-50">
+            &copy; 2024 NORIEN Berlin. Wszystkie prawa zastrzeżone.
+        </div>
+    </footer>
+
+</body>
+</html>
