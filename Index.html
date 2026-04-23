@@ -78,11 +78,11 @@
         </div>
 
         <div class="hidden md:flex gap-12 text-[10px] tracking-widest uppercase font-light">
-            <a href="#map-explore" class="hover:opacity-50 transition">The Map</a>
-            <a href="#archives" class="hover:opacity-50 transition">The Archives</a>
-            <a href="#manifesto" class="hover:opacity-50 transition">Manifesto</a>
+            <a href="#map-explore" id="nav-map" class="hover:opacity-50 transition">Mapa</a>
+            <a href="#archives" id="nav-archives" class="hover:opacity-50 transition">Archiwum</a>
+            <a href="#manifesto" id="nav-manifesto" class="hover:opacity-50 transition">Manifest</a>
         </div>
-        <div class="text-[10px] tracking-widest border-b border-norien-dark pb-1">CART (0)</div>
+        <div id="nav-cart" class="text-[10px] tracking-widest border-b border-norien-dark pb-1 uppercase">KOSZYK (0)</div>
     </nav>
 
     <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative">
@@ -93,7 +93,7 @@
                 Nie sprzedajemy świec. Archiwizujemy tożsamość Berlina. Każdy zapach to współrzędne geograficzne i emocjonalny zapis konkretnej dzielnicy.
             </p>
         </div>
-        <a href="#map-explore" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] tracking-widest uppercase animate-bounce italic opacity-40">Scroll to Explore</a>
+        <a href="#map-explore" id="scroll-text" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] tracking-widest uppercase animate-bounce italic opacity-40">Przewiń by odkryć</a>
     </section>
 
     <section id="map-explore" class="py-32 bg-white relative">
@@ -246,6 +246,11 @@
     <script>
         const translations = {
             pl: {
+                navMap: "Mapa",
+                navArchives: "Archiwum",
+                navManifesto: "Manifest",
+                navCart: "KOSZYK (0)",
+                scrollText: "Przewiń by odkryć",
                 heroSub: "Exclusive Souvenir from Berlin",
                 heroDesc: "Nie sprzedajemy świec. Archiwizujemy tożsamość Berlina. Każdy zapach to współrzędne geograficzne i emocjonalny zapis konkretnej dzielnicy.",
                 guideSub: "The Urban Guide",
@@ -256,6 +261,11 @@
                 manifestoText: "Nasze kompozycje powstają w berlińskim atelier. Używamy wosku sojowego jako czystego nośnika dla rzadkich esencji, które definiują architekturę miasta."
             },
             en: {
+                navMap: "The Map",
+                navArchives: "The Archives",
+                navManifesto: "Manifesto",
+                navCart: "CART (0)",
+                scrollText: "Scroll to explore",
                 heroSub: "Exclusive Souvenir from Berlin",
                 heroDesc: "We don't sell candles. We archive Berlin's identity. Each scent represents geographic coordinates and an emotional record of a specific district.",
                 guideSub: "The Urban Guide",
@@ -266,6 +276,11 @@
                 manifestoText: "Our compositions are created in our Berlin atelier. We use soy wax as a clean carrier for rare essences that define the city's architecture."
             },
             de: {
+                navMap: "Karte",
+                navArchives: "Archiv",
+                navManifesto: "Manifest",
+                navCart: "WARENKORB (0)",
+                scrollText: "Scrollen zum Entdecken",
                 heroSub: "Exklusives Souvenir aus Berlin",
                 heroDesc: "Wir verkaufen keine Kerzen. Wir archivieren die Identität Berlins. Jeder Duft ist eine geografische Koordinate und eine emotionale Aufzeichnung eines Viertels.",
                 guideSub: "The Urban Guide",
@@ -276,6 +291,11 @@
                 manifestoText: "Unsere Kompositionen entstehen in unserem Berliner Atelier. Wir verwenden Sojawachs als reinen Träger für seltene Essenzen, die die Architektur der Stadt definieren."
             },
             fr: {
+                navMap: "La Carte",
+                navArchives: "Archives",
+                navManifesto: "Manifeste",
+                navCart: "PANIER (0)",
+                scrollText: "Faire défiler",
                 heroSub: "Souvenir Exclusif de Berlin",
                 heroDesc: "Nous ne vendons pas de bougies. Nous archivons l'identité de Berlin. Chaque parfum est une coordonnée géographique et un enregistrement émotionnel d'un quartier.",
                 guideSub: "The Urban Guide",
@@ -286,6 +306,11 @@
                 manifestoText: "Nos compositions sont créées dans notre atelier berlinois. Nous utilisons la cire de soja comme support pur pour des essences rares qui définissent l'architecture de la ville."
             },
             es: {
+                navMap: "El Mapa",
+                navArchives: "Archivos",
+                navManifesto: "Manifiesto",
+                navCart: "CARRITO (0)",
+                scrollText: "Desplazar para explorar",
                 heroSub: "Recuerdo Exclusivo de Berlín",
                 heroDesc: "No vendemos velas. Archivamos la identidad de Berlín. Cada aroma es una coordenada geográfica y un registro emocional de un distrito específico.",
                 guideSub: "The Urban Guide",
@@ -298,6 +323,14 @@
         };
 
         function changeLang(lang) {
+            // Tłumaczenie menu
+            document.getElementById('nav-map').innerText = translations[lang].navMap;
+            document.getElementById('nav-archives').innerText = translations[lang].navArchives;
+            document.getElementById('nav-manifesto').innerText = translations[lang].navManifesto;
+            document.getElementById('nav-cart').innerText = translations[lang].navCart;
+            document.getElementById('scroll-text').innerText = translations[lang].scrollText;
+
+            // Tłumaczenie treści
             document.getElementById('hero-sub').innerText = translations[lang].heroSub;
             document.getElementById('hero-desc').innerText = translations[lang].heroDesc;
             document.getElementById('guide-sub').innerText = translations[lang].guideSub;
@@ -307,6 +340,7 @@
             document.getElementById('manifesto-sub').innerText = translations[lang].manifestoSub;
             document.getElementById('manifesto-text').innerText = translations[lang].manifestoText;
 
+            // Klasy aktywne
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-' + lang).classList.add('active');
         }
