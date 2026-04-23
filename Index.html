@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NORIEN Berlin | Craft Soy Candles & Urban Stories</title>
+    <title>NORIEN BERLIN | Olfactory Cartography</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -13,201 +13,155 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         norien: {
-                            bg: '#f8f5f2', 
-                            text: '#2d241f',
-                            map: '#5c3d31', // Kolor linii mapy z etykiety
-                            paper: '#fffdfc'
+                            gold: '#a68a64',
+                            dark: '#0f0f0f',
+                            canvas: '#fcfaf7',
+                            mapLine: '#4a2c2a'
                         }
-                    }
+                    },
+                    letterSpacing: { 'ultra': '0.5em' }
                 }
             }
         }
     </script>
     <style>
-        /* Stylizowana mapa ulic jako tło */
-        .city-grid {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cpath d='M0 200 L800 200 M0 500 L800 500 M200 0 L200 800 M500 0 L500 800 M100 0 L700 800 M0 700 L800 100' stroke='%235c3d31' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
-        }
-        .kerning-widest { letter-spacing: 0.3em; }
+        .map-container svg { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .district-path { fill: transparent; stroke: #4a2c2a; stroke-width: 0.5; cursor: pointer; transition: 0.3s; }
+        .district-path:hover { fill: #4a2c2a; fill-opacity: 0.1; stroke-width: 1.5; }
+        .fade-in { animation: fadeIn 1.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        body::-webkit-scrollbar { width: 4px; }
+        body::-webkit-scrollbar-track { background: #fcfaf7; }
+        body::-webkit-scrollbar-thumb { background: #0f0f0f; }
     </style>
 </head>
-<body class="bg-norien-bg text-norien-text font-sans antialiased">
+<body class="bg-norien-canvas text-norien-dark font-sans antialiased overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 bg-norien-bg/90 backdrop-blur-md border-b border-norien-map/10">
-        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="text-xl font-light kerning-widest uppercase">Norien Berlin</div>
-            <div class="hidden md:flex space-x-10 text-sm uppercase tracking-widest">
-                <a href="#concept" class="hover:opacity-50 transition">Koncepcja</a>
-                <a href="#kolekcja" class="hover:opacity-50 transition">Kolekcja</a>
-                <a href="#kontakt" class="hover:opacity-50 transition">Kontakt</a>
-            </div>
-            <div class="text-sm font-semibold">SKLEP</div>
+    <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference text-white">
+        <div class="text-xl font-extralight tracking-ultra uppercase">Norien Berlin</div>
+        <div class="hidden md:flex gap-12 text-[10px] tracking-widest uppercase font-light">
+            <a href="#archives" class="hover:opacity-50 transition">The Archives</a>
+            <a href="#manifesto" class="hover:opacity-50 transition">Manifesto</a>
+            <a href="#locations" class="hover:opacity-50 transition">Stockists</a>
         </div>
+        <div class="text-[10px] tracking-widest border-b border-white pb-1">CART (0)</div>
     </nav>
 
-    <header id="concept" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="absolute inset-0 city-grid opacity-40"></div>
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-            <div class="z-10 space-y-8">
-                <h2 class="text-xs uppercase kerning-widest text-norien-map font-semibold">Kraftowa Manufaktura</h2>
-                <h1 class="text-5xl md:text-7xl font-light leading-tight">Mapa zapachów <br><span class="italic">Berlina.</span></h1>
-                <p class="text-lg text-norien-text/80 max-w-md leading-relaxed">
-                    Każda świeca to konkretne współrzędne, historia dzielnicy i jej unikalny puls. Nie tworzymy tylko zapachów – zamykamy w szkle surową architekturę, nocne życie i spokój berlińskich parków.
-                </p>
-                <div class="flex gap-4">
-                    <a href="#kolekcja" class="bg-norien-map text-white px-10 py-4 rounded-full text-sm tracking-widest hover:bg-opacity-90 transition">EKSPLORUJ MIASTO</a>
-                </div>
-            </div>
-            <div class="relative">
-                <div class="aspect-square bg-norien-map/5 rounded-full flex items-center justify-center p-12 border border-norien-map/10">
-                    <div class="text-center space-y-4">
-                        <p class="text-xs kerning-widest uppercase opacity-60">Hand Poured in</p>
-                        <p class="text-4xl font-light italic">Berlin-Mitte</p>
-                        <p class="text-xs opacity-60">100% Soy Wax | Small Batches</p>
-                    </div>
-                </div>
-            </div>
+    <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative">
+        <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+            <svg viewBox="0 0 800 600" class="w-full h-full object-cover"><path d="M0 100 L800 500 M100 0 L700 600 M400 0 L400 600" stroke="currentColor" fill="none"></path></svg>
         </div>
-    </header>
+        
+        <div class="z-10 fade-in">
+            <p class="text-[10px] tracking-[0.6em] uppercase mb-8 opacity-60">Exclusive Souvenir from Berlin</p>
+            <h1 class="text-6xl md:text-8xl font-thin tracking-tighter mb-12">Olfactory <br> <span class="italic">Cartography.</span></h1>
+            <p class="max-w-xl mx-auto text-lg font-light leading-relaxed opacity-80">
+                Nie sprzedajemy świec. Archiwizujemy tożsamość Berlina. Każdy zapach to współrzędne geograficzne i emocjonalny zapis konkretnej dzielnicy. Dostępne wyłącznie w wybranych galeriach sztuki i concept store'ach.
+            </p>
+        </div>
+        <a href="#map-explore" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] tracking-widest uppercase animate-bounce">Scroll to Explore</a>
+    </section>
 
-    <section id="kolekcja" class="py-24 bg-norien-paper">
-        <div class="container mx-auto px-6">
-            <div class="mb-20">
-                <h3 class="text-3xl font-light">Kolekcja Dzielnice</h3>
-                <div class="h-px w-24 bg-norien-map mt-4"></div>
+    <section id="map-explore" class="py-32 bg-white relative">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-24 items-center">
+            <div class="map-container relative">
+                <svg viewBox="0 0 500 400" class="w-full h-auto">
+                    <path class="district-path" d="M150 150 L250 100 L350 150 L300 250 L200 250 Z" /> <path class="district-path" d="M250 250 L350 250 L380 350 L280 380 Z" /> <path class="district-path" d="M350 150 L450 120 L480 220 L350 250 Z" /> <path class="district-path" d="M50 180 L150 150 L200 250 L100 280 Z" /> <circle cx="270" cy="220" r="3" fill="#4a2c2a" /> </svg>
+                <div class="absolute top-0 left-0 text-[10px] tracking-widest opacity-30 uppercase font-bold">Berlin District Grid v.4.02</div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                
-                <div class="group cursor-pointer">
-                    <div class="bg-norien-bg aspect-[4/5] mb-6 flex flex-col items-center justify-center p-8 relative overflow-hidden border border-transparent group-hover:border-norien-map/20 transition-all">
-                        <div class="absolute inset-0 city-grid opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="z-10 text-center border border-norien-text/20 p-6 w-full h-full flex flex-col justify-center bg-white/20 backdrop-blur-sm">
-                            <p class="text-[8px] tracking-[0.3em] mb-4">NORIEN BERLIN</p>
-                            <h4 class="text-2xl font-light kerning-widest mb-4">NEUKÖLLN</h4>
-                            <div class="h-[1px] w-full bg-norien-text/30 my-4"></div>
-                            <p class="text-[9px] leading-relaxed uppercase">Palo Santo • Bergamot<br>Cedarwood</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-tighter">Neukölln No. 3</p>
-                            <p class="text-xs text-norien-text/60 italic">Surowy & Autentyczny</p>
-                        </div>
-                        <p class="text-sm">129 PLN</p>
-                    </div>
+            <div class="space-y-12">
+                <h2 class="text-xs tracking-ultra uppercase opacity-50 font-bold">The Urban Guide</h2>
+                <h3 class="text-4xl font-extralight leading-snug">Twoja dzielnica. <br> Twój zapachowy paszport.</h3>
+                <p class="text-norien-text/70 leading-relaxed font-light">
+                    Nasze kompozycje pełnią rolę przewodników. Neukölln nie pachnie tylko dymem – pachnie historią przemian, nocnym powietrzem przy kanale i surowym betonem. Mitte to sterylność galerii i zapach starych parkietów w ministerstwach. Wybierz swój fragment miasta.
+                </p>
+                <div class="pt-6 border-t border-norien-dark/10">
+                    <p class="text-sm italic font-light italic text-norien-mapLine">"Dla tych, którzy wiedzą, gdzie szukać."</p>
                 </div>
-
-                <div class="group cursor-pointer">
-                    <div class="bg-norien-bg aspect-[4/5] mb-6 flex flex-col items-center justify-center p-8 relative overflow-hidden border border-transparent group-hover:border-norien-map/20 transition-all">
-                        <div class="absolute inset-0 city-grid opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="z-10 text-center border border-norien-text/20 p-6 w-full h-full flex flex-col justify-center bg-white/20 backdrop-blur-sm">
-                            <p class="text-[8px] tracking-[0.3em] mb-4">NORIEN BERLIN</p>
-                            <h4 class="text-2xl font-light kerning-widest mb-4">MITTE</h4>
-                            <div class="h-[1px] w-full bg-norien-text/30 my-4"></div>
-                            <p class="text-[9px] leading-relaxed uppercase">Palo Santo • Bergamot<br>Cedarwood</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-tighter">Mitte No. 1</p>
-                            <p class="text-xs text-norien-text/60 italic">Serce Miasta</p>
-                        </div>
-                        <p class="text-sm">129 PLN</p>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer">
-                    <div class="bg-norien-bg aspect-[4/5] mb-6 flex flex-col items-center justify-center p-8 relative overflow-hidden border border-transparent group-hover:border-norien-map/20 transition-all">
-                        <div class="absolute inset-0 city-grid opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="z-10 text-center border border-norien-text/20 p-6 w-full h-full flex flex-col justify-center bg-white/20 backdrop-blur-sm">
-                            <p class="text-[8px] tracking-[0.3em] mb-4">NORIEN BERLIN</p>
-                            <h4 class="text-2xl font-light kerning-widest mb-4">KREUZBERG</h4>
-                            <div class="h-[1px] w-full bg-norien-text/30 my-4"></div>
-                            <p class="text-[9px] leading-relaxed uppercase">Sandalwood • Smoke<br>Leather</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-tighter">Kreuzberg No. 36</p>
-                            <p class="text-xs text-norien-text/60 italic">Nocny & Intensywny</p>
-                        </div>
-                        <p class="text-sm">129 PLN</p>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer">
-                    <div class="bg-norien-bg aspect-[4/5] mb-6 flex flex-col items-center justify-center p-8 relative overflow-hidden border border-transparent group-hover:border-norien-map/20 transition-all">
-                        <div class="absolute inset-0 city-grid opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="z-10 text-center border border-norien-text/20 p-6 w-full h-full flex flex-col justify-center bg-white/20 backdrop-blur-sm">
-                            <p class="text-[8px] tracking-[0.3em] mb-4">NORIEN BERLIN</p>
-                            <h4 class="text-2xl font-light kerning-widest mb-4">WEDDING</h4>
-                            <div class="h-[1px] w-full bg-norien-text/30 my-4"></div>
-                            <p class="text-[9px] leading-relaxed uppercase">Moss • Pine<br>Cold Air</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-tighter">Wedding No. 65</p>
-                            <p class="text-xs text-norien-text/60 italic">Zielony & Nieodkryty</p>
-                        </div>
-                        <p class="text-sm">129 PLN</p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <section class="py-24 overflow-hidden relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-2xl">
-                <h3 class="text-[10px] uppercase kerning-widest mb-6 opacity-60">The Urban Philosophy</h3>
-                <p class="text-3xl font-light leading-snug mb-12">
-                    Berlin to nie tylko stolica. To zbiór mikroklimatów. Od betonu Neukölln po luksus Charlottenburga – naszą misją jest przełożenie tych tekstur na język zapachów.
-                </p>
-                <div class="grid grid-cols-2 gap-8 border-t border-norien-map/10 pt-10">
-                    <div>
-                        <h5 class="font-semibold text-sm mb-2 uppercase tracking-tighter">Miasto</h5>
-                        <p class="text-sm text-norien-text/70 leading-relaxed">Analizujemy historię i architekturę ulic, by dobrać odpowiednie nuty bazy.</p>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold text-sm mb-2 uppercase tracking-tighter">Rzemiosło</h5>
-                        <p class="text-sm text-norien-text/70 leading-relaxed">Każda etykieta zawiera fragment mapy dzielnicy, z której wywodzi się inspiracja.</p>
+    <section id="archives" class="py-32 px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="mb-16 flex flex-col items-center">
+                    <p class="text-[9px] tracking-ultra mb-4 opacity-40 uppercase">Inventory No. 01</p>
+                    <div class="w-full aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-white relative">
+                        <div class="absolute inset-0 opacity-[0.05] pointer-events-none city-grid"></div>
+                        <div class="text-center w-full">
+                            <h4 class="text-3xl font-extralight tracking-ultra mb-8">MITTE</h4>
+                            <div class="h-px w-12 bg-norien-dark mx-auto mb-8"></div>
+                            <p class="text-[8px] tracking-widest leading-loose uppercase">Palo Santo / Bergamot<br>Ancient Cedar</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="absolute right-[-10%] top-0 w-1/2 h-full city-grid opacity-10 pointer-events-none rotate-12"></div>
-    </section>
-
-    <footer id="kontakt" class="bg-norien-text text-norien-bg py-20">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
-                <div class="space-y-6">
-                    <p class="text-2xl font-light kerning-widest uppercase">Norien Berlin</p>
-                    <p class="text-sm opacity-60 max-w-xs leading-relaxed">
-                        Kraftowe świece sojowe tworzone z myślą o miłośnikach Berlina i dobrego designu.
+                <div class="space-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <p class="text-[10px] leading-relaxed font-light uppercase tracking-tighter">
+                        Opowieść o sercu miasta. Punkt styku historii i nowoczesności.
                     </p>
-                </div>
-                <div class="grid grid-cols-2 gap-20">
-                    <div class="space-y-4">
-                        <p class="text-xs font-bold uppercase tracking-widest">Kontakt</p>
-                        <a href="mailto:hello@norien.de" class="block text-sm opacity-60 hover:opacity-100 transition">hello@norien.de</a>
-                        <p class="text-sm opacity-60">Instagram</p>
-                    </div>
-                    <div class="space-y-4">
-                        <p class="text-xs font-bold uppercase tracking-widest">Lokalizacja</p>
-                        <p class="text-sm opacity-60 italic">Handmade in Berlin</p>
-                        <p class="text-[10px] opacity-40">Postdamer Str. 120<br>Berlin, Germany</p>
+                    <div class="flex justify-between items-center pt-4">
+                        <span class="text-sm font-light">€ 55.00</span>
+                        <span class="text-[10px] tracking-widest border-b border-norien-dark uppercase">Acquire</span>
                     </div>
                 </div>
             </div>
-            <div class="mt-20 pt-8 border-t border-white/5 text-[10px] opacity-30 uppercase tracking-[0.3em] flex justify-between">
-                <span>&copy; 2026 Norien Berlin</span>
-                <span>Designed for Berliners</span>
+
+            <div class="group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="mb-16 flex flex-col items-center">
+                    <p class="text-[9px] tracking-ultra mb-4 opacity-40 uppercase">Inventory No. 03</p>
+                    <div class="w-full aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-white relative">
+                        <div class="text-center w-full">
+                            <h4 class="text-3xl font-extralight tracking-ultra mb-8">NEUKÖLLN</h4>
+                            <div class="h-px w-12 bg-norien-dark mx-auto mb-8"></div>
+                            <p class="text-[8px] tracking-widest leading-loose uppercase">Tobacco / Night Air<br>Urban Resin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <p class="text-[10px] leading-relaxed font-light uppercase tracking-tighter">
+                        Zapis nocy nad Landwehrkanal. Surowy, autentyczny, nieuchwytny.
+                    </p>
+                    <div class="flex justify-between items-center pt-4">
+                        <span class="text-sm font-light">€ 55.00</span>
+                        <span class="text-[10px] tracking-widest border-b border-norien-dark uppercase">Acquire</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden lg:block group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700 opacity-30 italic flex items-center justify-center">
+                <span class="text-xs uppercase tracking-widest">Reserved for Future Archive</span>
+            </div>
+            <div class="hidden lg:block group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700 opacity-30 italic flex items-center justify-center">
+                <span class="text-xs uppercase tracking-widest">Reserved for Future Archive</span>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="manifesto" class="py-40 bg-norien-dark text-white text-center">
+        <div class="max-w-4xl mx-auto px-6 space-y-12">
+            <h2 class="text-[10px] tracking-ultra uppercase opacity-40">The Studio</h2>
+            <p class="text-3xl md:text-5xl font-thin leading-tight">
+                Nasze kompozycje powstają w berlińskim atelier. Nie stosujemy masowych rozwiązań. Używamy wosku sojowego jako czystego nośnika dla rzadkich esencji, które definiują architekturę Berlina.
+            </p>
+            <div class="pt-12">
+                <div class="inline-block border border-white/20 px-12 py-6 text-[10px] tracking-ultra uppercase">
+                    Designed for Galleries & Concept Stores
+                </div>
             </div>
         </div>
+    </section>
+
+    <footer class="py-20 px-10 border-t border-norien-dark/10 text-[10px] tracking-widest uppercase opacity-60 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div>&copy; 2026 Norien Berlin — Olfactory Archives</div>
+        <div class="flex gap-12">
+            <a href="#" class="hover:opacity-100 transition">Imprint</a>
+            <a href="#" class="hover:opacity-100 transition">Instagram</a>
+            <a href="#" class="hover:opacity-100 transition">Privacy</a>
+        </div>
+        <div>Berlin-Mitte, GER</div>
     </footer>
 
 </body>
