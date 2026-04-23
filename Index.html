@@ -13,7 +13,6 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         norien: {
-                            gold: '#a68a64',
                             dark: '#0f0f0f',
                             canvas: '#fcfaf7',
                             mapLine: '#4a2c2a'
@@ -25,143 +24,178 @@
         }
     </script>
     <style>
-        .map-container svg { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .district-path { fill: transparent; stroke: #4a2c2a; stroke-width: 0.5; cursor: pointer; transition: 0.3s; }
-        .district-path:hover { fill: #4a2c2a; fill-opacity: 0.1; stroke-width: 1.5; }
-        .fade-in { animation: fadeIn 1.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        body::-webkit-scrollbar { width: 4px; }
-        body::-webkit-scrollbar-track { background: #fcfaf7; }
-        body::-webkit-scrollbar-thumb { background: #0f0f0f; }
+        /* Naprawa menu */
+        nav { background-color: rgba(252, 250, 247, 0.95); }
+        
+        /* Interaktywna Mapa */
+        .district { 
+            fill: transparent; 
+            stroke: #4a2c2a; 
+            stroke-width: 0.8; 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer;
+        }
+        
+        .district:hover { 
+            fill: #4a2c2a; 
+            fill-opacity: 0.15; 
+            transform: translateY(-10px) scale(1.02);
+            stroke-width: 1.5;
+        }
+
+        .map-container svg { overflow: visible; }
+        
+        /* Płynne przewijanie */
+        html { scroll-behavior: smooth; }
+
+        .district-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            fill: #4a2c2a;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .district:hover + .district-label, .district-label:hover {
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="bg-norien-canvas text-norien-dark font-sans antialiased overflow-x-hidden">
+<body class="bg-norien-canvas text-norien-dark font-sans antialiased">
 
-    <nav class="fixed w-full z-[100] px-10 py-8 flex justify-between items-center mix-blend-difference text-white">
-        <div class="text-xl font-extralight tracking-ultra uppercase">Norien Berlin</div>
-        <div class="hidden md:flex gap-12 text-[10px] tracking-widest uppercase font-light">
-            <a href="#archives" class="hover:opacity-50 transition">The Archives</a>
-            <a href="#manifesto" class="hover:opacity-50 transition">Manifesto</a>
-            <a href="#locations" class="hover:opacity-50 transition">Stockists</a>
+    <nav class="fixed w-full z-[100] px-6 md:px-10 py-6 border-b border-norien-dark/5 backdrop-blur-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="text-xl font-extralight tracking-ultra uppercase leading-none">Norien</span>
+                <span class="text-xl font-extralight tracking-ultra uppercase leading-none">Berlin</span>
+            </div>
+            
+            <div class="hidden md:flex gap-12 text-[10px] tracking-widest uppercase font-light">
+                <a href="#archives" class="hover:opacity-50 transition">The Archives</a>
+                <a href="#map-explore" class="hover:opacity-50 transition">Berlin Map</a>
+                <a href="#manifesto" class="hover:opacity-50 transition">Manifesto</a>
+            </div>
+            
+            <div class="text-[10px] tracking-widest border-b border-norien-dark pb-1 cursor-pointer">CART (0)</div>
         </div>
-        <div class="text-[10px] tracking-widest border-b border-white pb-1">CART (0)</div>
     </nav>
 
-    <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative">
-        <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
-            <svg viewBox="0 0 800 600" class="w-full h-full object-cover"><path d="M0 100 L800 500 M100 0 L700 600 M400 0 L400 600" stroke="currentColor" fill="none"></path></svg>
-        </div>
-        
-        <div class="z-10 fade-in">
-            <p class="text-[10px] tracking-[0.6em] uppercase mb-8 opacity-60">Exclusive Souvenir from Berlin</p>
-            <h1 class="text-6xl md:text-8xl font-thin tracking-tighter mb-12">Olfactory <br> <span class="italic">Cartography.</span></h1>
-            <p class="max-w-xl mx-auto text-lg font-light leading-relaxed opacity-80">
-                Nie sprzedajemy świec. Archiwizujemy tożsamość Berlina. Każdy zapach to współrzędne geograficzne i emocjonalny zapis konkretnej dzielnicy. Dostępne wyłącznie w wybranych galeriach sztuki i concept store'ach.
-            </p>
-        </div>
-        <a href="#map-explore" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] tracking-widest uppercase animate-bounce">Scroll to Explore</a>
+    <section class="h-[70vh] flex flex-col justify-center items-center text-center px-6 pt-20">
+        <p class="text-[10px] tracking-[0.6em] uppercase mb-8 opacity-40">Berlin Olfactory Atelier</p>
+        <h1 class="text-5xl md:text-7xl font-thin tracking-tighter mb-6">Olfactory <br> <span class="italic">Cartography.</span></h1>
     </section>
 
-    <section id="map-explore" class="py-32 bg-white relative">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-24 items-center">
-            <div class="map-container relative">
-                <svg viewBox="0 0 500 400" class="w-full h-auto">
-                    <path class="district-path" d="M150 150 L250 100 L350 150 L300 250 L200 250 Z" /> <path class="district-path" d="M250 250 L350 250 L380 350 L280 380 Z" /> <path class="district-path" d="M350 150 L450 120 L480 220 L350 250 Z" /> <path class="district-path" d="M50 180 L150 150 L200 250 L100 280 Z" /> <circle cx="270" cy="220" r="3" fill="#4a2c2a" /> </svg>
-                <div class="absolute top-0 left-0 text-[10px] tracking-widest opacity-30 uppercase font-bold">Berlin District Grid v.4.02</div>
+    <section id="map-explore" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 space-y-4">
+                <p class="text-[10px] tracking-ultra uppercase opacity-50">The Urban Guide</p>
+                <h2 class="text-3xl font-extralight">Twoja dzielnica. Twój zapachowy paszport.</h2>
             </div>
-            <div class="space-y-12">
-                <h2 class="text-xs tracking-ultra uppercase opacity-50 font-bold">The Urban Guide</h2>
-                <h3 class="text-4xl font-extralight leading-snug">Twoja dzielnica. <br> Twój zapachowy paszport.</h3>
-                <p class="text-norien-text/70 leading-relaxed font-light">
-                    Nasze kompozycje pełnią rolę przewodników. Neukölln nie pachnie tylko dymem – pachnie historią przemian, nocnym powietrzem przy kanale i surowym betonem. Mitte to sterylność galerii i zapach starych parkietów w ministerstwach. Wybierz swój fragment miasta.
-                </p>
-                <div class="pt-6 border-t border-norien-dark/10">
-                    <p class="text-sm italic font-light italic text-norien-mapLine">"Dla tych, którzy wiedzą, gdzie szukać."</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="archives" class="py-32 px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="max-w-4xl mx-auto map-container">
+                <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                    <a href="#prod-prenzlauer">
+                        <path class="district" d="M260 80 L340 60 L380 130 L280 150 Z" />
+                        <text x="285" y="110" class="district-label">Prenzlauer Berg</text>
+                    </a>
+                    
+                    <a href="#prod-mitte">
+                        <path class="district" d="M180 160 L280 150 L310 230 L210 250 Z" />
+                        <text x="225" y="205" class="district-label">Mitte</text>
+                    </a>
+
+                    <a href="#prod-kreuzberg">
+                        <path class="district" d="M210 250 L310 230 L350 290 L250 320 Z" />
+                        <text x="245" y="285" class="district-label">Kreuzberg</text>
+                    </a>
+
+                    <a href="#prod-neukoln">
+                        <path class="district" d="M310 230 L400 220 L440 330 L350 290 Z" />
+                        <text x="350" y="270" class="district-label">Neukölln</text>
+                    </a>
+
+                    <circle cx="210" cy="180" r="2" fill="#4a2c2a" />
+                </svg>
+            </div>
             
-            <div class="group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700">
-                <div class="mb-16 flex flex-col items-center">
-                    <p class="text-[9px] tracking-ultra mb-4 opacity-40 uppercase">Inventory No. 01</p>
-                    <div class="w-full aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-white relative">
-                        <div class="absolute inset-0 opacity-[0.05] pointer-events-none city-grid"></div>
-                        <div class="text-center w-full">
-                            <h4 class="text-3xl font-extralight tracking-ultra mb-8">MITTE</h4>
-                            <div class="h-px w-12 bg-norien-dark mx-auto mb-8"></div>
-                            <p class="text-[8px] tracking-widest leading-loose uppercase">Palo Santo / Bergamot<br>Ancient Cedar</p>
-                        </div>
+            <p class="text-center mt-12 text-[10px] tracking-widest opacity-40 uppercase">Wybierz dzielnicę, aby odkryć jej historię</p>
+        </div>
+    </section>
+
+    <section id="archives" class="py-32 px-6 bg-norien-canvas">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div id="prod-mitte" class="group bg-white p-10 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-norien-canvas relative mb-8">
+                    <div class="text-center">
+                        <h4 class="text-2xl font-extralight tracking-ultra mb-6">MITTE</h4>
+                        <div class="h-px w-8 bg-norien-dark mx-auto mb-6"></div>
+                        <p class="text-[8px] tracking-widest uppercase">Galerie & Ministerstwa</p>
                     </div>
                 </div>
-                <div class="space-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p class="text-[10px] leading-relaxed font-light uppercase tracking-tighter">
-                        Opowieść o sercu miasta. Punkt styku historii i nowoczesności.
-                    </p>
-                    <div class="flex justify-between items-center pt-4">
-                        <span class="text-sm font-light">€ 55.00</span>
-                        <span class="text-[10px] tracking-widest border-b border-norien-dark uppercase">Acquire</span>
-                    </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-4">Mitte No. 1</h5>
+                <p class="text-[10px] leading-relaxed opacity-70 mb-6">Sterylność białych kubików w galeriach i zapach starych parkietów. Ekskluzywny spokój w samym centrum zgiełku.</p>
+                <div class="flex justify-between items-center border-t border-norien-dark/5 pt-4">
+                    <span class="text-sm">€ 55.00</span>
+                    <button class="text-[9px] tracking-widest uppercase border-b border-norien-dark">Acquire</button>
                 </div>
             </div>
 
-            <div class="group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700">
-                <div class="mb-16 flex flex-col items-center">
-                    <p class="text-[9px] tracking-ultra mb-4 opacity-40 uppercase">Inventory No. 03</p>
-                    <div class="w-full aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-white relative">
-                        <div class="text-center w-full">
-                            <h4 class="text-3xl font-extralight tracking-ultra mb-8">NEUKÖLLN</h4>
-                            <div class="h-px w-12 bg-norien-dark mx-auto mb-8"></div>
-                            <p class="text-[8px] tracking-widest leading-loose uppercase">Tobacco / Night Air<br>Urban Resin</p>
-                        </div>
+            <div id="prod-neukoln" class="group bg-white p-10 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-norien-canvas relative mb-8">
+                    <div class="text-center">
+                        <h4 class="text-2xl font-extralight tracking-ultra mb-6">NEUKÖLLN</h4>
+                        <div class="h-px w-8 bg-norien-dark mx-auto mb-6"></div>
+                        <p class="text-[8px] tracking-widest uppercase">Noc nad kanałem</p>
                     </div>
                 </div>
-                <div class="space-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p class="text-[10px] leading-relaxed font-light uppercase tracking-tighter">
-                        Zapis nocy nad Landwehrkanal. Surowy, autentyczny, nieuchwytny.
-                    </p>
-                    <div class="flex justify-between items-center pt-4">
-                        <span class="text-sm font-light">€ 55.00</span>
-                        <span class="text-[10px] tracking-widest border-b border-norien-dark uppercase">Acquire</span>
-                    </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-4">Neukölln No. 3</h5>
+                <p class="text-[10px] leading-relaxed opacity-70 mb-6">Palo Santo i tytoń. Surowy beton, neonowe światła i nieskończone rozmowy przy Landwehrkanal.</p>
+                <div class="flex justify-between items-center border-t border-norien-dark/5 pt-4">
+                    <span class="text-sm">€ 55.00</span>
+                    <button class="text-[9px] tracking-widest uppercase border-b border-norien-dark">Acquire</button>
                 </div>
             </div>
 
-            <div class="hidden lg:block group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700 opacity-30 italic flex items-center justify-center">
-                <span class="text-xs uppercase tracking-widest">Reserved for Future Archive</span>
+            <div id="prod-kreuzberg" class="group bg-white p-10 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-norien-canvas relative mb-8">
+                    <div class="text-center">
+                        <h4 class="text-2xl font-extralight tracking-ultra mb-6">KREUZBERG</h4>
+                        <div class="h-px w-8 bg-norien-dark mx-auto mb-6"></div>
+                        <p class="text-[8px] tracking-widest uppercase">Rewolucja & Kadzidło</p>
+                    </div>
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-4">Kreuzberg No. 36</h5>
+                <p class="text-[10px] leading-relaxed opacity-70 mb-6">Mieszanka kultur, dymu i wolności. Zapach, który nie bierze jeńców, tak jak historia tej dzielnicy.</p>
+                <div class="flex justify-between items-center border-t border-norien-dark/5 pt-4">
+                    <span class="text-sm">€ 55.00</span>
+                    <button class="text-[9px] tracking-widest uppercase border-b border-norien-dark">Acquire</button>
+                </div>
             </div>
-            <div class="hidden lg:block group relative bg-norien-canvas p-12 border border-transparent hover:border-norien-dark transition-all duration-700 opacity-30 italic flex items-center justify-center">
-                <span class="text-xs uppercase tracking-widest">Reserved for Future Archive</span>
+
+            <div id="prod-prenzlauer" class="group bg-white p-10 border border-transparent hover:border-norien-dark transition-all duration-700">
+                <div class="aspect-[2/3] border border-norien-dark/5 flex items-center justify-center p-8 bg-norien-canvas relative mb-8">
+                    <div class="text-center">
+                        <h4 class="text-2xl font-extralight tracking-ultra mb-6">PRENZL. BERG</h4>
+                        <div class="h-px w-8 bg-norien-dark mx-auto mb-6"></div>
+                        <p class="text-[8px] tracking-widest uppercase">Poranek w Mauerpark</p>
+                    </div>
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-4">P. Berg No. 7</h5>
+                <p class="text-[10px] leading-relaxed opacity-70 mb-6">Zregenerowana elegancja. Skoszona trawa, kawa w niedzielne rano i spokój odnowionych kamienic.</p>
+                <div class="flex justify-between items-center border-t border-norien-dark/5 pt-4">
+                    <span class="text-sm">€ 55.00</span>
+                    <button class="text-[9px] tracking-widest uppercase border-b border-norien-dark">Acquire</button>
+                </div>
             </div>
 
         </div>
     </section>
 
-    <section id="manifesto" class="py-40 bg-norien-dark text-white text-center">
-        <div class="max-w-4xl mx-auto px-6 space-y-12">
-            <h2 class="text-[10px] tracking-ultra uppercase opacity-40">The Studio</h2>
-            <p class="text-3xl md:text-5xl font-thin leading-tight">
-                Nasze kompozycje powstają w berlińskim atelier. Nie stosujemy masowych rozwiązań. Używamy wosku sojowego jako czystego nośnika dla rzadkich esencji, które definiują architekturę Berlina.
-            </p>
-            <div class="pt-12">
-                <div class="inline-block border border-white/20 px-12 py-6 text-[10px] tracking-ultra uppercase">
-                    Designed for Galleries & Concept Stores
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 px-10 border-t border-norien-dark/10 text-[10px] tracking-widest uppercase opacity-60 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div>&copy; 2026 Norien Berlin — Olfactory Archives</div>
-        <div class="flex gap-12">
-            <a href="#" class="hover:opacity-100 transition">Imprint</a>
-            <a href="#" class="hover:opacity-100 transition">Instagram</a>
-            <a href="#" class="hover:opacity-100 transition">Privacy</a>
-        </div>
-        <div>Berlin-Mitte, GER</div>
+    <footer class="py-20 px-10 border-t border-norien-dark/10 text-[10px] tracking-widest uppercase opacity-40 flex justify-between">
+        <span>&copy; 2026 Norien Berlin</span>
+        <span>Crafting Urban Memories</span>
     </footer>
 
 </body>
